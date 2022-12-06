@@ -9,6 +9,10 @@
     "type": "git",
     "url": "https://github.com/crasyhorse/ci_cd_lib.git"
   },
+  "scripts": {
+    "build": "npm run test && tsc",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha"
+  },
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
