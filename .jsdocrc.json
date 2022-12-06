@@ -1,0 +1,36 @@
+{
+    "opts": {
+        "encoding": "utf8",
+        "destination": "docs/jsdoc",
+        "recurse": true,
+        "template": "node_modules/better-docs"
+    },
+    "plugins": [
+        "node_modules/better-docs/typescript"
+    ],
+    "recurseDepth": 10,
+    "source": {
+        "exclude": [
+            ".tmp",
+            "coverage",
+            "dist",
+            "node_modules",
+            "test"
+        ],
+        "include": [
+            "src"
+        ],
+        "includePattern": ".+\\.ts$"
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": [
+            "jsdoc"
+        ]
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": true
+    }
+}
