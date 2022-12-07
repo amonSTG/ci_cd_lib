@@ -1,0 +1,56 @@
+name: "Build IBAN validator library"
+on: [workflow_call]
+jobs:
+  build-iban-validator-library:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Check out the code"
+        uses: actions/checkout@v3.1.0
+        with:
+          ref: "main"
+      - name: "Build with Node.js 16.16.0"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.16.0
+          cache: "npm"
+      - name: "Install npm packages"
+        run: npm ci
+      - name: "Static code analysis"
+        run: npm run lint
+        continue-on-error: true
+      - name: "Start testing"
+        run: npm run test
+        continue-on-error: true
+      - name: "Create source code documentation"
+        run: npm run doc
+      - name: "Build the procject"
+        run: tsc
+      - name: "Upload Mocha test results"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "Mocha test results"
+          path: ./mocha-results.xml
+      - name: "Upload code coverage report"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "Code coverage"
+          path: ./coverage
+      - name: "Upload JSDoc"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "JSDoc"
+          path: ./docs
+      - name: "Upload package content"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "Package content"
+          path: |
+            src/
+            dist/
+            test/
+            package.json
+            package-lock.json
+            Readme.md
+            tsconfig.json
+            .npmrc
+            .npmignore
