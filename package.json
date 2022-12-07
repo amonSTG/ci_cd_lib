@@ -16,6 +16,9 @@
     "lint-fix": "eslint --fix src/",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' nyc mocha"
   },
+  "publishConfig": {
+    "@crasyhorse:registry": "https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/chai": "^4.3.4",

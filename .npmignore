@@ -1,0 +1,7 @@
+.eslintrc.json
+.github/
+.jsdocrc.json
+.mocharc.js
+.nycrc.json
+coverage/
+docs/
