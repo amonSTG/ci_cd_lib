@@ -4,6 +4,8 @@ on:
   release:
     types: [created]
 jobs:
+  call-build-job:
+    uses: ./.github/workflows/build-job.yaml
   release-the-library:
     needs: call-build-job
     runs-on: ubuntu-20.04
