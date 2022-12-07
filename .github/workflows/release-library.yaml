@@ -1,0 +1,26 @@
+name: "Publish IBAN validator library to Github Packages"
+run-name: ${{ github.actor}} is running the build job
+on:
+  release:
+    types: [created]
+jobs:
+  release-the-library:
+    needs: call-build-job
+    runs-on: ubuntu-20.04
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: "Package content"
+      - name: "Build with Node.js 16.16.0"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.16.0
+          registry-url: https://npm.pkg.github.com/
+          cache: "npm"
+      - name: "Publish the library"
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
