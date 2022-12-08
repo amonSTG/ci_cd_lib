@@ -1,17 +1,19 @@
+"use strict";
+exports.__esModule = true;
+exports.validate = void 0;
 /**
  * And array containing the country code and the length of the IBAN in the respective country.
  *
  * @type {string[]}
  */
-const charsArr = [
-  { key: 'AT', len: 20 },
-  { key: 'BE', len: 16 },
-  { key: 'CZ', len: 24 },
-  { key: 'DE', len: 22 },
-  { key: 'DK', len: 18 },
-  { key: 'FR', len: 27 }
-]
-
+var charsArr = [
+    { key: 'AT', len: 20 },
+    { key: 'BE', len: 16 },
+    { key: 'CZ', len: 24 },
+    { key: 'DE', len: 22 },
+    { key: 'DK', len: 18 },
+    { key: 'FR', len: 27 }
+];
 /**
  * Contains the lengths of the IBANs. The country code serves as key.
  *
@@ -21,12 +23,9 @@ const charsArr = [
  *
  * @type {Map<String, number>}
  */
-const chars: Map<String, number> = new Map(
-  charsArr.map((item) => {
-    return [item.key, item.len]
-  })
-)
-
+var chars = new Map(charsArr.map(function (item) {
+    return [item.key, item.len];
+}));
 /**
  * Validates an IBAN as described in [ISO 7064]{@link https://en.wikipedia.org/wiki/ISO_7064}.
  *
@@ -34,18 +33,16 @@ const chars: Map<String, number> = new Map(
  *
  * @returns {boolean} Returns true if the IBAN is valid.
  */
-export function validate (iban: string): boolean {
-  if (!checkLength(iban)) {
-    return false
-  }
-
-  const rearrangedIban: string = rearrangeIban(iban)
-  const convertedIban = convertToInteger(rearrangedIban)
-  const segments: string[] = createSegments(convertedIban)
-
-  return calculate(segments) === 1
+function validate(iban) {
+    if (!checkLength(iban)) {
+        return false;
+    }
+    var rearrangedIban = rearrangeIban(iban);
+    var convertedIban = convertToInteger(rearrangedIban);
+    var segments = createSegments(convertedIban);
+    return calculate(segments) === 1;
 }
-
+exports.validate = validate;
 /**
  * Computes the remainder.
  *
@@ -55,21 +52,19 @@ export function validate (iban: string): boolean {
  *
  * @returns {number}
  */
-function calculate (segments: string[]): number {
-  let n: number = 0
-
-  segments.forEach((segment) => {
-    if (segment.length === 9) {
-      n = Number(segment) % 97
-    } else {
-      segment = `${n}${segment}`
-      n = Number(segment) % 97
-    }
-  })
-
-  return n
+function calculate(segments) {
+    var n = 0;
+    segments.forEach(function (segment) {
+        if (segment.length === 9) {
+            n = Number(segment) % 97;
+        }
+        else {
+            segment = "".concat(n).concat(segment);
+            n = Number(segment) % 97;
+        }
+    });
+    return n;
 }
-
 /**
  * Checks the IBAN for correct length.
  *
@@ -77,12 +72,10 @@ function calculate (segments: string[]): number {
  *
  * @returns {boolean} Returns true if the IBAN has the correct length
  */
-function checkLength (iban: string): boolean {
-  const countryCode = iban.substring(0, 2)
-
-  return chars.has(countryCode) && chars.get(countryCode) === iban.length
+function checkLength(iban) {
+    var countryCode = iban.substring(0, 2);
+    return chars.has(countryCode) && chars.get(countryCode) === iban.length;
 }
-
 /**
  * Converts all characters in the IBAN to numbers.
  *
@@ -98,23 +91,20 @@ function checkLength (iban: string): boolean {
  *
  * @returns {string} The integer representation of the IBAN
  */
-function convertToInteger (iban: string): string {
-  const _iban: string = iban.toUpperCase()
-
-  let convertedIban: string = ''
-  for (const c of _iban) {
-    if (c.match(/[0-9]/) != null) {
-      convertedIban += c
+function convertToInteger(iban) {
+    var _iban = iban.toUpperCase();
+    var convertedIban = '';
+    for (var _i = 0, _iban_1 = _iban; _i < _iban_1.length; _i++) {
+        var c = _iban_1[_i];
+        if (c.match(/[0-9]/) != null) {
+            convertedIban += c;
+        }
+        if (c.match(/[A-Z]/) != null) {
+            convertedIban += String(Number(c.charCodeAt(0)) - 55);
+        }
     }
-
-    if (c.match(/[A-Z]/) != null) {
-      convertedIban += String(Number(c.charCodeAt(0)) - 55)
-    }
-  }
-
-  return convertedIban
+    return convertedIban;
 }
-
 /**
  * Splits the IBAN into segments.
  *
@@ -131,24 +121,19 @@ function convertToInteger (iban: string): string {
  *
  * @returns {string[]} The segmented IBAN
  */
-function createSegments (iban: string): string[] {
-  let _iban: string = iban
-  const segments: string[] = []
-  let index: number = 0
-
-  segments[index++] = _iban.substring(0, 9)
-  _iban = _iban.substring(9, _iban.length)
-
-  while (_iban.length >= 9) {
-    segments[index++] = _iban.substring(0, 7)
-    _iban = _iban.substring(7, _iban.length)
-  }
-
-  segments[index++] = _iban
-
-  return segments
+function createSegments(iban) {
+    var _iban = iban;
+    var segments = [];
+    var index = 0;
+    segments[index++] = _iban.substring(0, 9);
+    _iban = _iban.substring(9, _iban.length);
+    while (_iban.length >= 9) {
+        segments[index++] = _iban.substring(0, 7);
+        _iban = _iban.substring(7, _iban.length);
+    }
+    segments[index++] = _iban;
+    return segments;
 }
-
 /**
  * Moves the four digits from the beginning of the IBAN to its end.
  *
@@ -161,6 +146,7 @@ function createSegments (iban: string): string[] {
  *
  * @returns {string} The rearranged IBAN
  */
-function rearrangeIban (iban: string): string {
-  return `${iban.substring(4, iban.length)}${iban.substring(0, 4)}`
+function rearrangeIban(iban) {
+    return "".concat(iban.substring(4, iban.length)).concat(iban.substring(0, 4));
 }
+//# sourceMappingURL=main.js.map

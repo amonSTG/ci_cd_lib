@@ -10,7 +10,7 @@
     "lib": [
       "ESNext"
     ],
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "noImplicitThis": true,
     "outDir": "dist/",

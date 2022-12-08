@@ -1,0 +1,6 @@
+<testsuite name="Mocha Tests" tests="4" failures="0" errors="0" skipped="0" timestamp="Thu, 08 Dec 2022 13:53:53 GMT" time="0.004">
+<testcase classname="The validate function" name="should return true if a valid IBAN is given" time="0.001"/>
+<testcase classname="The validate function" name="should return false if an invalid IBAN is given" time="0"/>
+<testcase classname="The validate function" name="should return false if an IBAN with an invalid length is given" time="0"/>
+<testcase classname="The validate function" name="should return false if an IBAN with an unknown country code is given" time="0"/>
+</testsuite>

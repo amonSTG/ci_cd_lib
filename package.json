@@ -14,10 +14,10 @@
     "doc": "jsdoc -c .jsdocrc.json",
     "lint": "eslint src/",
     "lint-fix": "eslint --fix src/",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' nyc mocha"
+    "test": "nyc mocha"
   },
   "publishConfig": {
-    "@crasyhorse:registry": "https://npm.pkg.github.com"
+    "@amonSTG:registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
