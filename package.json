@@ -1,5 +1,5 @@
 {
-  "name": "@crasyhorse/iban-validate",
+  "name": "@amonSTG/iban-validate",
   "version": "1.0.0",
   "description": "An IBAN validator",
   "main": "src/main.ts",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/crasyhorse/ci_cd_lib.git"
+    "url": "https://github.com/amonSTG/ci_cd_lib.git"
   },
   "scripts": {
     "build": "npm run test && npm run lint-fix && npm run doc && tsc",
